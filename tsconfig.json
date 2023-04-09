@@ -2,14 +2,17 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "CommonJS",
+    "moduleResolution": "node",
     "declaration": true,
     "outDir": "./lib",
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["./src/*"],
+      "@src*": ["src/*"]
     }
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "include": ["src", "**/.ts"],
+  "exclude": ["lib", "node_modules", "**/__tests__/*"]
 }

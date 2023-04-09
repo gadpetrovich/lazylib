@@ -1,4 +1,4 @@
-import { and, lazy, unlazy } from '../src/baseFunctions';
+import { and, lazy, unlazy } from '@src/baseFunctions';
 
 describe('baseFunctions', () => {
   test('функция and', () => {

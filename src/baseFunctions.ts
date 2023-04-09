@@ -1,4 +1,4 @@
-import { Lazy, LazyList } from "./types"
+import { Lazy, LazyList } from "@src/types"
 
 
 export function and(a: Lazy<boolean>, b: Lazy<boolean>): Lazy<boolean> {
