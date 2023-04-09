@@ -1,5 +1,5 @@
 {
-  "name": "lazylib",
+  "name": "ts-lazy-lib",
   "author": "Шарапов Павел, subber@yandex.ru",
   "description": "Реализация ленивых вычислений в typescript",
   "version": "0.1.2",

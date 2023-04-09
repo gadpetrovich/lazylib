@@ -14,11 +14,11 @@
 npm:
 
 ```sh
-npm install lazylib
+npm install ts-lazy-lib
 ```
 
 yarn:
 
 ```sh
-yarn add lazylib
+yarn add ts-lazy-lib
 ```
