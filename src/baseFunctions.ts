@@ -1,11 +1,11 @@
 import { Lazy, LazyList } from '@src/types';
 
 export function and(a: Lazy<boolean>, b: Lazy<boolean>): Lazy<boolean> {
-  return () => unlazy(a) ? unlazy(b) : false;
+  return () => (unlazy(a) ? unlazy(b) : false);
 }
 
 export function or(a: Lazy<boolean>, b: Lazy<boolean>): Lazy<boolean> {
-  return () => unlazy(a) ? true : unlazy(b);
+  return () => (unlazy(a) ? true : unlazy(b));
 }
 
 export function trace<T>(x: Lazy<T>, message: string): Lazy<T> {
@@ -28,7 +28,7 @@ export function toList(xs: number[]): LazyList<number> {
     if (xs.length === 0) {
       return null;
     }
- 
+
     return {
       head: lazy(xs[0]),
       tail: toList(xs.slice(1)),
@@ -60,15 +60,15 @@ export function filter<T>(f: (_: T) => boolean, xs: LazyList<T>): LazyList<T> {
     if (pair === null) {
       return null;
     }
- 
+
     const x = unlazy(pair.head);
     if (f(x)) {
       return {
         head: lazy(x),
         tail: filter(f, pair.tail),
       };
-    } 
-    
+    }
+
     return unlazy(filter(f, pair.tail));
   };
 }
@@ -78,16 +78,16 @@ export function take<T>(n: Lazy<number>, xs: LazyList<T>): LazyList<T> {
     const pair = unlazy(xs);
     if (pair === null) {
       return null;
-    } 
-    
+    }
+
     const count = unlazy(n);
     if (count > 0) {
       return {
         head: pair.head,
         tail: take(lazy(count - 1), pair.tail),
       };
-    } 
-    
+    }
+
     return null;
   };
 }
@@ -98,7 +98,7 @@ export function skip<T>(n: Lazy<number>, xs: LazyList<T>): LazyList<T> {
     if (pair === null) {
       return null;
     }
- 
+
     const count = unlazy(n);
     if (count > 0) {
       return unlazy(skip<T>(lazy(count - 1), pair.tail));
