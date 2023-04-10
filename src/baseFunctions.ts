@@ -46,14 +46,6 @@ export function range(begin: Lazy<number>): LazyList<number> {
   };
 }
 
-export function printList<T>(xs: LazyList<T>) {
-  let pair = unlazy(xs);
-  while (pair !== null) {
-    console.log(unlazy(pair.head));
-    pair = unlazy(pair.tail);
-  }
-}
-
 export function filter<T>(f: (_: T) => boolean, xs: LazyList<T>): LazyList<T> {
   return () => {
     const pair = unlazy(xs);
@@ -107,3 +99,19 @@ export function skip<T>(n: Lazy<number>, xs: LazyList<T>): LazyList<T> {
     return pair;
   };
 }
+
+export function map<TIN, TOUT>(func: (_: TIN) => TOUT, xs: LazyList<TIN>): LazyList<TOUT> {
+  return () => {
+    const pair = unlazy(xs);
+    if (pair === null) {
+      return null;
+    }
+
+    return {
+      head: lazy(func(unlazy(pair.head))),
+      tail: map(func, pair.tail),
+    };
+  };
+}
+
+// Todo: добавить остальные ленивые функции, каррирование, композицию, моноиды и монады.

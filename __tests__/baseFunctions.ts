@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { and, filter, lazy, or, range, skip, take, toList, unlazy } from '../src/baseFunctions';
+import { and, filter, lazy, map, or, range, skip, take, toList, unlazy } from '../src/baseFunctions';
 import { LazyList } from '../src/types';
 
 const andValues = [
@@ -84,5 +84,13 @@ describe('baseFunctions', () => {
 
     const result = take(lazy(5), list);
     expect(fromLazyList(result)).toEqual([0, 2, 4, 6, 8]);
+  });
+
+  test('map', () => {
+    const sourceList = range(lazy(1));
+    const stringList = map((value: number) => String(value), sourceList);
+    const result = take(lazy(5), stringList);
+
+    expect(fromLazyList(result).join('')).toEqual('12345');
   });
 });
