@@ -19,7 +19,7 @@ const orValues = [
 
 function fromLazyList<T>(lazyList: LazyList<T>): T[] {
   const resultList: T[] = [];
-  for(let value = lazyList(); value !== null; value = value.tail()) {
+  for (let value = lazyList(); value !== null; value = value.tail()) {
     resultList.push(value.head());
   }
 
@@ -53,7 +53,7 @@ describe('baseFunctions', () => {
   });
 
   test('toList', () => {
-    const list = [1,2,3,4];
+    const list = [1, 2, 3, 4];
     const lazyList = toList(list);
     const resultList = fromLazyList(lazyList);
     expect(resultList).toEqual(list);
