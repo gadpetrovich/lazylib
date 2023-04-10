@@ -1,7 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { and, filter, lazy, map, or, range, skip, take, toList, unlazy } from '../src/baseFunctions';
-import { LazyList } from '../src/types';
+import type { LazyList } from '../src/index';
+import {
+  and,
+  filter,
+  head,
+  last,
+  lazy,
+  map,
+  or,
+  range,
+  reverse,
+  skip,
+  take,
+  toList,
+  unlazy,
+} from '../src/index';
 
 const andValues = [
   [false, false, false],
@@ -92,5 +106,39 @@ describe('baseFunctions', () => {
     const result = take(lazy(5), stringList);
 
     expect(fromLazyList(result).join('')).toEqual('12345');
+  });
+
+  test('head', () => {
+    const list = range(lazy(2));
+    const firstValue = head(list);
+
+    expect(unlazy(firstValue)).toEqual(2);
+  });
+
+  test('head from empty list', () => {
+    const list = toList<number>([]);
+
+    expect(head(list)).toThrow(Error);
+  });
+
+  test('reverse', () => {
+    const list = range(lazy(5));
+    const first5values = take(lazy(5), list);
+    const revertedValues = reverse(first5values);
+
+    expect(fromLazyList(revertedValues)).toEqual([9, 8, 7, 6, 5]);
+  });
+
+  test('last', () => {
+    const list = range(lazy(3));
+    const lastValue = last(take(lazy(5), list));
+
+    expect(unlazy(lastValue)).toEqual(7);
+  });
+
+  test('last from empty list', () => {
+    const list = toList<number>([]);
+
+    expect(last(list)).toThrow(Error);
   });
 });

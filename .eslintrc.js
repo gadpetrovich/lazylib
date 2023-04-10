@@ -21,25 +21,37 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.eslint.json',
   },
-  plugins: [
-    '@typescript-eslint', 
-    'import',
-    'jest',
-    'simple-import-sort',
-    'prettier',
-  ],
+  plugins: ['@typescript-eslint', 'import', 'jest', 'simple-import-sort', 'prettier'],
   root: true,
-  "rules": {
-    "max-len": ["error", {"code": 120, "ignoreUrls": true}],
-    "@typescript-eslint/strict-boolean-expressions": "error",
-    "semi": "off",
-    "@typescript-eslint/semi": ["error"],
-    "indent": ["error", 2],
-    "no-multiple-empty-lines": ["error", {
-      "max": 1,
-      "maxEOF": 0,
-      "maxBOF": 2,
-    }],
-    "eol-last": ["error", "always"],
-  }
+  rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+      {
+        usePrettierrc: true,
+      },
+    ],
+    '@typescript-eslint/strict-boolean-expressions': 'error',
+    semi: 'off',
+    '@typescript-eslint/semi': ['error'],
+    indent: ['error', 2],
+    'no-multiple-empty-lines': [
+      'error',
+      {
+        max: 1,
+        maxEOF: 0,
+        maxBOF: 2,
+      },
+    ],
+    'eol-last': ['error', 'always'],
+    'sort-imports': [
+      'error',
+      {
+        memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
+      },
+    ],
+    '@typescript-eslint/consistent-type-imports': 'error',
+  },
 };
