@@ -6,6 +6,7 @@ import {
   head,
   last,
   lazy,
+  length,
   map,
   range,
   reverse,
@@ -99,5 +100,12 @@ describe('list', () => {
     const list = toList<number>([]);
 
     expect(last(list)).toThrow(Error);
+  });
+
+  test('length', () => {
+    const list = toList<number>([10, 20, 30]);
+    const len = unlazy(length(list));
+
+    expect(len).toEqual(3);
   });
 });

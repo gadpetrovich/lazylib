@@ -121,3 +121,12 @@ export function reverse<T>(xs: LazyList<T>): LazyList<T> {
 export function last<T>(xs: LazyList<T>): Lazy<T> {
   return head(reverse(xs));
 }
+
+export function length<T>(xs: LazyList<T>): Lazy<number> {
+  let len = 0;
+  for (let value = unlazy(xs); value !== null; value = unlazy(value.tail)) {
+    len++;
+  }
+
+  return lazy(len);
+}
