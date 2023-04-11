@@ -1,4 +1,4 @@
-import type { Lazy } from '@src/types';
+import type { Lazy } from '@/types';
 
 export function and(a: Lazy<boolean>, b: Lazy<boolean>): Lazy<boolean> {
   return () => (unlazy(a) ? unlazy(b) : false);

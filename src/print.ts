@@ -1,5 +1,5 @@
-import type { LazyList } from '@src/types';
-import { unlazy } from '@src/baseFunctions';
+import type { LazyList } from '@/types';
+import { unlazy } from '@/baseFunctions';
 
 export function printList<T>(xs: LazyList<T>) {
   let pair = unlazy(xs);

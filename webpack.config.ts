@@ -1,5 +1,6 @@
 import * as path from 'path';
-import * as webpack from 'webpack';
+import type * as webpack from 'webpack';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 // In case you run into any typescript error when configuring `devServer`
 // import 'webpack-dev-server';
 
@@ -12,16 +13,15 @@ const config: webpack.Configuration = {
     library: 'lazylib',
     libraryTarget: 'umd',
     clean: true,
-    globalObject: 'this'
+    globalObject: 'this',
   },
   devtool: 'inline-source-map',
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
-    extensions: [".ts", ".tsx", ".js"],
+    extensions: ['.ts', '.tsx', '.js'],
+    plugins: [new TsconfigPathsPlugin()],
   },
-  plugins: [
-    
-  ],
+  plugins: [],
   module: {
     rules: [
       {
@@ -29,8 +29,8 @@ const config: webpack.Configuration = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
-    ]
-  }
+    ],
+  },
 };
 
 export default config;

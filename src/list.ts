@@ -1,5 +1,5 @@
-import type { Lazy, LazyList } from '@srctypes';
-import { lazy, unlazy } from '@src/baseFunctions';
+import type { Lazy, LazyList } from '@/types';
+import { lazy, unlazy } from '@/baseFunctions';
 
 export function toList<T>(xs: T[]): LazyList<T> {
   return () => {
