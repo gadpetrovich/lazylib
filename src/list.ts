@@ -107,12 +107,14 @@ export function head<T>(xs: LazyList<T>): Lazy<T> {
 }
 
 export function reverse<T>(xs: LazyList<T>): LazyList<T> {
-  const resultList: T[] = [];
-  for (let value = unlazy(xs); value !== null; value = unlazy(value.tail)) {
-    resultList.unshift(value.head());
-  }
+  return () => {
+    const resultList: T[] = [];
+    for (let value = unlazy(xs); value !== null; value = unlazy(value.tail)) {
+      resultList.unshift(value.head());
+    }
 
-  return toList(resultList);
+    return unlazy(toList(resultList));
+  };
 }
 
 /**
@@ -123,10 +125,12 @@ export function last<T>(xs: LazyList<T>): Lazy<T> {
 }
 
 export function length<T>(xs: LazyList<T>): Lazy<number> {
-  let len = 0;
-  for (let value = unlazy(xs); value !== null; value = unlazy(value.tail)) {
-    len++;
-  }
+  return () => {
+    let len = 0;
+    for (let value = unlazy(xs); value !== null; value = unlazy(value.tail)) {
+      len++;
+    }
 
-  return lazy(len);
+    return len;
+  };
 }
