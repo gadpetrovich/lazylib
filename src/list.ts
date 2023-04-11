@@ -135,17 +135,31 @@ export function length<T>(xs: LazyList<T>): Lazy<number> {
   };
 }
 
-export function foldr<T>(func: (_1: T, _2: T) => T, xs: LazyList<T>): Lazy<T> {
+export function foldr<T>(func: (_1: T, _2: T) => T, init: Lazy<T>, xs: LazyList<T>): Lazy<T> {
   return () => {
-    const pair1 = unlazy(xs);
-    if (pair1 === null) throw Error('попытка свернуть пустой список');
+    let accumulator = unlazy(init);
 
-    const value1 = unlazy(pair1.head);
-    const pair2 = unlazy(pair1.tail);
+    const resultList: Lazy<T>[] = [];
+    for (let value = unlazy(xs); value !== null; value = unlazy(value.tail)) {
+      resultList.push(value.head);
+    }
 
-    if (pair2 === null) return value1;
+    for (let index = resultList.length - 1; index >= 0; index--) {
+      accumulator = func(unlazy(resultList[index]), accumulator);
+    }
 
-    const value2 = unlazy(foldr(func, pair1.tail));
-    return func(value1, value2);
+    return accumulator;
+  };
+}
+
+export function foldl<T>(func: (_1: T, _2: T) => T, init: Lazy<T>, xs: LazyList<T>): Lazy<T> {
+  return () => {
+    let accumulator = unlazy(init);
+
+    for (let index = unlazy(xs); index !== null; index = unlazy(index.tail)) {
+      accumulator = func(accumulator, unlazy(index.head));
+    }
+
+    return accumulator;
   };
 }

@@ -3,6 +3,7 @@
 import type { LazyList } from '../src/index';
 import {
   filter,
+  foldl,
   foldr,
   head,
   last,
@@ -111,22 +112,71 @@ describe('list', () => {
   });
 
   test('foldr', () => {
-    const list = toList<number>([10, 20, 30]);
-    const sum = unlazy(foldr((x: number, y: number) => x + y, list));
+    const list = toList<number>([8, 12, 24, 4]);
+    // Используем деление, чтобы убедиться, что у нас операция идет справа налево
+    const sum = unlazy(foldr((x: number, y: number) => x / y, lazy(2), list));
 
-    expect(sum).toEqual(60);
+    expect(sum).toEqual(8);
   });
 
   test('foldr from empty list', () => {
     const list = toList<number>([]);
+    const result = unlazy(foldr(x => x, lazy(3), list));
 
-    expect(foldr(x => x, list)).toThrow('попытка свернуть пустой список');
+    expect(result).toEqual(3);
   });
 
-  test('foldr one element', () => {
-    const list = toList<number>([10]);
-    const sum = unlazy(foldr((x: number, y: number) => x + y, list));
+  test('foldl', () => {
+    const list = toList<number>([4, 2, 4]);
+    // Используем деление, чтобы убедиться, что у нас операция идет справа налево
+    const sum = unlazy(foldl((x: number, y: number) => x / y, lazy(64), list));
 
-    expect(sum).toEqual(10);
+    expect(sum).toEqual(2);
+  });
+
+  test('foldl from empty list', () => {
+    const list = toList<number>([]);
+    const result = unlazy(foldl(x => x, lazy(3), list));
+
+    expect(result).toEqual(3);
+  });
+});
+
+// Проверка на переполнение стека
+describe('looong list', () => {
+  const count = 100000;
+  const longList = [...Array(count).keys()];
+
+  test(`take ${count}`, () => {
+    const list = take(lazy(count), range(lazy(0)));
+
+    expect(fromLazyList(list)).toEqual(longList);
+  });
+
+  test(`map ${count}`, () => {
+    const sourceList = range(lazy(0));
+    const stringList = map((value: number) => String(value), sourceList);
+    const result = take(lazy(count), stringList);
+    const expectedList = longList.map(v => String(v)).join('');
+
+    expect(fromLazyList(result).join('')).toEqual(expectedList);
+  });
+
+  test(`foldr ${count}`, () => {
+    const sourceList = range(lazy(0));
+    const takedList = take(lazy(count), sourceList);
+    const sum = foldr((a: number, b: number) => a + b, lazy(0), takedList);
+    const expectedSum = longList.reduce((a, b) => a + b);
+
+    expect(unlazy(sum)).toEqual(expectedSum);
+  });
+
+  test(`foldl ${count}`, () => {
+    const sourceList = range(lazy(0));
+    const takedList = take(lazy(count), sourceList);
+    const sum = foldl((a: number, b: number) => a + b, lazy(0), takedList);
+    const expectedSum = longList.reduce((a, b) => a + b);
+
+    expect(unlazy(sum)).toEqual(expectedSum);
   });
 });
