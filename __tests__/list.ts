@@ -3,6 +3,7 @@
 import type { LazyList } from '../src/index';
 import {
   filter,
+  foldr,
   head,
   last,
   lazy,
@@ -107,5 +108,25 @@ describe('list', () => {
     const len = unlazy(length(list));
 
     expect(len).toEqual(3);
+  });
+
+  test('foldr', () => {
+    const list = toList<number>([10, 20, 30]);
+    const sum = unlazy(foldr((x: number, y: number) => x + y, list));
+
+    expect(sum).toEqual(60);
+  });
+
+  test('foldr from empty list', () => {
+    const list = toList<number>([]);
+
+    expect(foldr(x => x, list)).toThrow('попытка свернуть пустой список');
+  });
+
+  test('foldr one element', () => {
+    const list = toList<number>([10]);
+    const sum = unlazy(foldr((x: number, y: number) => x + y, list));
+
+    expect(sum).toEqual(10);
   });
 });

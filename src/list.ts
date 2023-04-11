@@ -134,3 +134,18 @@ export function length<T>(xs: LazyList<T>): Lazy<number> {
     return len;
   };
 }
+
+export function foldr<T>(func: (_1: T, _2: T) => T, xs: LazyList<T>): Lazy<T> {
+  return () => {
+    const pair1 = unlazy(xs);
+    if (pair1 === null) throw Error('попытка свернуть пустой список');
+
+    const value1 = unlazy(pair1.head);
+    const pair2 = unlazy(pair1.tail);
+
+    if (pair2 === null) return value1;
+
+    const value2 = unlazy(foldr(func, pair1.tail));
+    return func(value1, value2);
+  };
+}

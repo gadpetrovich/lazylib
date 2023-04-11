@@ -2,7 +2,7 @@
   "name": "ts-lazy-lib",
   "author": "Шарапов Павел, subber@yandex.ru",
   "description": "Реализация ленивых вычислений в typescript",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "type": "commonjs",
   "exports": {
     ".": {
