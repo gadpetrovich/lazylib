@@ -7,6 +7,7 @@
     "declaration": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "allowJs": true,
     "outDir": "./lib",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
