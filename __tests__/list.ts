@@ -179,4 +179,30 @@ describe('looong list', () => {
 
     expect(unlazy(sum)).toEqual(expectedSum);
   });
+
+  test(`length ${count}`, () => {
+    const sourceList = range(lazy(0));
+    const takedList = take(lazy(count), sourceList);
+    const len = length(takedList);
+
+    expect(unlazy(len)).toEqual(count);
+  });
+
+  test(`reverse ${count}`, () => {
+    const sourceList = range(lazy(0));
+    const takedList = take(lazy(count), sourceList);
+    const reversedList = reverse(takedList);
+    const expectedList = longList.slice().reverse();
+
+    expect(fromLazyList(reversedList)).toEqual(expectedList);
+  });
+
+  test(`filter ${count}`, () => {
+    const sourceList = range(lazy(0));
+    const filteredList = filter((x: number) => x % 2 === 0, sourceList);
+    const takedList = take(lazy(count), filteredList);
+    const expectedList = longList.map(value => value * 2);
+
+    expect(fromLazyList(takedList)).toEqual(expectedList);
+  });
 });
