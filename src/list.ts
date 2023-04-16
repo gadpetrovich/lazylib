@@ -7,11 +7,25 @@ export function toList<T>(xs: T[]): LazyList<T> {
       return null;
     }
 
-    return {
-      head: lazy(xs[0]),
-      tail: toList(xs.slice(1)),
-    };
+    let current: LazyList<T> = lazy(null);
+    for (let i = xs.length - 1; i >= 0; i--) {
+      current = lazy({
+        head: lazy(xs[i]),
+        tail: current,
+      });
+    }
+
+    return unlazy(current);
   };
+}
+
+export function fromList<T>(lazyList: LazyList<T>): T[] {
+  const resultList: T[] = [];
+  for (let value = lazyList(); value !== null; value = value.tail()) {
+    resultList.push(value.head());
+  }
+
+  return resultList;
 }
 
 export function range(begin: Lazy<number>): LazyList<number> {
@@ -62,19 +76,19 @@ export function take<T>(n: Lazy<number>, xs: LazyList<T>): LazyList<T> {
   };
 }
 
+/**
+ * @throws {Error}
+ */
 export function skip<T>(n: Lazy<number>, xs: LazyList<T>): LazyList<T> {
   return () => {
-    const pair = unlazy(xs);
-    if (pair === null) {
-      return null;
-    }
-
     const count = unlazy(n);
-    if (count > 0) {
-      return unlazy(skip<T>(lazy(count - 1), pair.tail));
+    let current = unlazy(xs);
+    for (let index = 0; index < count; index++) {
+      if (current === null) throw new Error('Извлечение значений из пустого списка');
+      current = unlazy(current.tail);
     }
 
-    return pair;
+    return current;
   };
 }
 
@@ -99,7 +113,7 @@ export function head<T>(xs: LazyList<T>): Lazy<T> {
   return () => {
     const lazyElement = unlazy(take(lazy(1), xs));
     if (lazyElement === null) {
-      throw Error('В списке нет элементов');
+      throw new Error('В списке нет элементов');
     }
 
     return unlazy(lazyElement.head);
