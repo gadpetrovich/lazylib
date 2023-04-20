@@ -1,5 +1,5 @@
-import { fromList } from '../src/list';
 import { describe, expect, test } from '@jest/globals';
+
 import {
   filter,
   foldl,
@@ -16,6 +16,7 @@ import {
   toList,
   unlazy,
 } from '../src/index';
+import { fromList } from '../src/list';
 
 describe('list', () => {
   test('toList', () => {

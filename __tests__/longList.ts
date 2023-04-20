@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { fromList } from '../src/list';
 import {
   filter,
   foldl,
@@ -14,6 +13,7 @@ import {
   take,
   unlazy,
 } from '../src/index';
+import { fromList } from '../src/list';
 
 // Проверка на переполнение стека
 describe('looong list', () => {

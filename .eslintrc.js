@@ -46,12 +46,11 @@ module.exports = {
       },
     ],
     'eol-last': ['error', 'always'],
-    'sort-imports': [
-      'error',
-      {
-        memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
-      },
-    ],
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error',
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/consistent-type-exports': 'error',
     '@typescript-eslint/switch-exhaustiveness-check': 'error',

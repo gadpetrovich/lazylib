@@ -1,5 +1,5 @@
-import type { LazyList } from './types';
 import { unlazy } from './baseFunctions';
+import type { Lazy, LazyList } from './types';
 
 export function printList<T>(xs: LazyList<T>) {
   let pair = unlazy(xs);
@@ -7,4 +7,11 @@ export function printList<T>(xs: LazyList<T>) {
     console.log(unlazy(pair.head));
     pair = unlazy(pair.tail);
   }
+}
+
+export function trace<T>(x: Lazy<T>, message: string): Lazy<T> {
+  return () => {
+    console.log(message);
+    return unlazy(x);
+  };
 }

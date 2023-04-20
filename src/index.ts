@@ -1,12 +1,11 @@
-export type { Lazy, LazyList } from './types';
-export { and, lazy, or, trace, unlazy } from './baseFunctions';
+export { and, lazy, or, unlazy } from './baseFunctions';
 export {
   filter,
   foldl,
   foldr,
   head,
-  length,
   last,
+  length,
   map,
   range,
   reverse,
@@ -14,3 +13,5 @@ export {
   take,
   toList,
 } from './list';
+export { printList, trace } from './print';
+export type { Lazy, LazyList } from './types';
