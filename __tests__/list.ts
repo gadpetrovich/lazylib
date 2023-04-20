@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { fromList } from '../src/list';
+import { describe, expect, test } from '@jest/globals';
 import {
   filter,
   foldl,
@@ -28,8 +27,8 @@ describe('list', () => {
 
   test('range', () => {
     const list = range(lazy(5));
-    const first = list().head();
-    const second = list().tail().head();
+    const first = list()?.head();
+    const second = list()?.tail()?.head();
     const result = [first, second];
     expect(result).toEqual([5, 6]);
   });
@@ -125,7 +124,7 @@ describe('list', () => {
 
   test('foldl', () => {
     const list = toList<number>([4, 2, 4]);
-    // Используем деление, чтобы убедиться, что у нас операция идет справа налево
+    // Используем деление, чтобы убедиться, что у нас операция идет слева направо
     const sum = unlazy(foldl((x: number, y: number) => x / y, lazy(64), list));
 
     expect(sum).toEqual(2);

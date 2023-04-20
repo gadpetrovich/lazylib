@@ -1,4 +1,4 @@
-export { Lazy, LazyList } from './types';
+export type { Lazy, LazyList } from './types';
 export { and, lazy, or, trace, unlazy } from './baseFunctions';
 export {
   filter,
